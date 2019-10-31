@@ -216,8 +216,6 @@ walk2(bases$microdata,bases$filename,
 bases <- get_microdata(year = 2017:2018, trimester = 1:4,type = 'individual')
 
 bases <- bases %>% 
-  filter(!(year==2015 & trimester%in%3:4),
-         !(year==2016 & trimester==1)) %>% 
   mutate(filename = glue('eph/individual/base_individual_{year}T{trimester}.RDS'),
          microdata = map(microdata,zap_labels),
          microdata = map(microdata, as.tibble),
