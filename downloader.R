@@ -176,7 +176,7 @@ walk2(bases$microdata,bases$filename,
 ### Bases post 2016
 
 ## Hogar
-bases <- get_microdata(year = 2017:2018, trimester = 1:4,type = 'hogar')
+bases <- get_microdata(year = 2019, trimester = 1:2,type = 'hogar')
 
 bases <- bases %>% 
   mutate(filename = glue('eph/hogar/base_hogar_{year}T{trimester}.RDS'),
@@ -213,7 +213,7 @@ walk2(bases$microdata,bases$filename,
 ### individual
 
 
-bases <- get_microdata(year = 2017:2018, trimester = 1:4,type = 'individual')
+bases <- get_microdata(year = 2019, trimester = 1:2,type = 'individual')
 
 bases <- bases %>% 
   mutate(filename = glue('eph/individual/base_individual_{year}T{trimester}.RDS'),
