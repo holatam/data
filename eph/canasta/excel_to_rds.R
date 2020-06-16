@@ -26,7 +26,7 @@ canastas <- canastas %>%
                                Mes %in% 4:6 ~ 2,
                                Mes %in% 7:9 ~ 3,
                                Mes %in% 10:12 ~ 4),
-         periodo = glue("{Anio}.{trimestre}")) %>%
+         periodo = paste(Anio,trimestre,sep = '.')) %>%
   group_by(region, periodo) %>%
   summarise(CBA = mean(cba),
             CBT = mean(cbt)) %>%
