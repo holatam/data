@@ -4,7 +4,7 @@ library(fs)
 library(progress)
 
 
-bases_hogar <- dir_ls('hogar/')
+bases_hogar <- dir_ls('eph/hogar/')
 pb <- progress_bar$new(total = length(bases_hogar))
 
 for (dir in bases_hogar) {
@@ -21,7 +21,7 @@ for (dir in bases_hogar) {
 }
 warnings()
 
-bases_individual <- dir_ls('individual/')
+bases_individual <- dir_ls('eph/individual/')
 pb <- progress_bar$new(total = length(bases_individual))
 for (dir in bases_individual) {
     pb$tick()
