@@ -180,9 +180,9 @@ bases <- bases %>%
                                         CH14 = as.character(CH14),
                                         CH14 = as.character(CH14),
                                         CH15 = as.integer(CH15),
-                                        CH15_COD = as.integer(CH15_COD),
+                                        CH15_COD = as.character(CH15_COD),
                                         CH16 = as.integer(CH16),
-                                        CH16_COD = as.integer(CH16_COD),
+                                        CH16_COD = as.character(CH16_COD),
                                         DECCFR = as.character(DECCFR),
                                         DECIFR = as.character(DECIFR),
                                         DECINDR = as.character(DECINDR),
@@ -273,8 +273,8 @@ bases <- bases %>%
                            if(!'CH16_COD' %in% names(x)) {x$CH16_COD <- NA_character_}
                            
                            x %>% mutate(CH05 = as.factor(CH05),
-                                        CH15_COD = as.integer(CH15_COD),
-                                        CH16_COD = as.integer(CH16_COD),
+                                        CH15_COD = as.character(CH15_COD),
+                                        CH16_COD = as.character(CH16_COD),
                                         #CODUSU = as.factor(CODUSU),
                                         #MAS_500 = as.factor(MAS_500),
                                         PP09A_ESP = as.factor(PP09A_ESP),
