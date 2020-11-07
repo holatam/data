@@ -3,11 +3,11 @@ library(readxl)
 library(tidyverse)
 library(glue)
 
-cba <- read_excel("canastas_eph.xlsx",
+cba <- read_excel("eph/canasta/canastas_eph.xlsx",
                   sheet = "CBA")
-ice <- read_excel("canastas_eph.xlsx",
+ice <- read_excel("eph/canasta/canastas_eph.xlsx",
                   sheet = "ICE")
-cbt <- read_excel("canastas_eph.xlsx",
+cbt <- read_excel("eph/canasta/canastas_eph.xlsx",
                   sheet = "CBT")
 
 
@@ -32,7 +32,7 @@ canastas <- canastas %>%
             CBT = mean(cbt)) %>%
   left_join(eph::diccionario_regiones)
 
-saveRDS(canastas, "canastas.rds")
+saveRDS(canastas, "eph/canasta/canastas.rds")
 
 
 
