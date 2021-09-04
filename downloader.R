@@ -447,9 +447,9 @@ walk2(bases$microdata,bases$filename,
 
 
 
-########################### 2020 en adelante ----
+########################### 2020 ----
 ### individual
-bases <- get_microdata(year = 2020:2021, trimester = 1, type = 'individual')
+bases <- get_microdata(year = 2020, trimester = 1:4, type = 'individual')
 
 bases <- bases %>% 
   mutate(filename = glue('eph/individual/base_individual_{year}T{trimester}.RDS'),
@@ -511,6 +511,7 @@ walk2(bases$microdata,bases$filename,
 
 
 ################# HOGAR - 2020 en adelante
+# Definir año y trimestre
 bases <- get_microdata(year = 2020:2021, trimester = 1,type = 'hogar')
 
 bases <- bases %>% 
@@ -545,3 +546,86 @@ bases <- bases%>%
 
 walk2(bases$microdata,bases$filename,
       function(.x,.y){saveRDS(object = .x,file = .y)})
+
+
+
+
+
+########################### 2020-t4 en adelante (ojo con el separador de decimales, pasó a ser ","----
+### individual
+
+temp <- tempfile(download.file("https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_4_Trim_2020_txt.zip",temp))
+base <- read.table(unz(temp, "usu_individual_T420.txt"), sep = ";", dec = ",", header = T)
+unlink(temp)
+
+base <- base %>% 
+  as_tibble() %>% 
+  rename_all(toupper) %>% 
+  mutate(CH14 = as.character(CH14),
+         PP3E_TOT = as.integer(PP3E_TOT),
+         PP3F_TOT = as.integer(PP3F_TOT),
+         PP04B_COD = as.character(PP04B_COD),
+         PP04D_COD = as.character(PP04D_COD),
+         PP11B_COD = as.character(PP11B_COD),
+         PP11D_COD = as.character(PP11D_COD),
+         DECOCUR   = as.character(DECOCUR),
+         IDECOCUR  = as.character(IDECOCUR),
+         RDECOCUR  = as.character(RDECOCUR),
+         GDECOCUR  = as.character(GDECOCUR),
+         PDECOCUR  = as.character(PDECOCUR),
+         ADECOCUR  = as.character(ADECOCUR),
+         DECINDR   = as.character(DECINDR),
+         IDECINDR  = as.character(IDECINDR),
+         RDECINDR  = as.character(RDECINDR),
+         GDECINDR  = as.character(GDECINDR),
+         PDECINDR  = as.character(PDECINDR),
+         ADECINDR  = as.character(ADECINDR),
+         DECIFR    = as.character(DECIFR),
+         IDECIFR   = as.character(IDECIFR),
+         RDECIFR   = as.character(RDECIFR),
+         GDECIFR   = as.character(GDECIFR),
+         PDECIFR   = as.character(PDECIFR),
+         ADECIFR   = as.character(ADECIFR),
+         DECCFR    = as.character(DECCFR),
+         IDECCFR   = as.character(IDECCFR),
+         RDECCFR   = as.character(RDECCFR),
+         GDECCFR   = as.character(GDECCFR),
+         PDECCFR   = as.character(PDECCFR),
+         ADECCFR   = as.character(ADECCFR))
+
+saveRDS(base, "eph/individual/base_individual_2020T4.RDS")
+#table(is.na(base$IPCF))
+
+
+### Hogar
+
+base <- read.table(unz(temp, "usu_hogar_T420.txt"), sep = ";", dec = ",", header = T)
+
+base <- base %>% 
+  as_tibble() %>% 
+  rename_all(toupper) %>% 
+  mutate(DECIFR = as.character(DECIFR),
+         IDECIFR = as.character(IDECIFR),
+         GDECIFR = as.character(GDECIFR),
+         PDECIFR = as.character(PDECIFR),
+         ADECIFR = as.character(ADECIFR),
+         DECCFR  = as.character(DECCFR),
+         IDECCFR = as.character(IDECCFR),
+         RDECCFR = as.character(RDECCFR),
+         GDECCFR = as.character(GDECCFR),
+         PDECCFR = as.character(PDECCFR),
+         ADECCFR = as.character(ADECCFR),
+         RDECIFR = as.character(RDECIFR),
+         IPCF    = as.numeric(as.character(IPCF)))
+
+
+saveRDS(base, "eph/hogar/base_hogar_2020T4.RDS")
+
+#test <- bind_rows(base, get_microdata(2020,1, type = "hogar"))
+
+prueba <- get_microdata(2020, 3)
+
+
+
+
+
