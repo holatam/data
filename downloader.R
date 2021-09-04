@@ -497,8 +497,8 @@ bases <- bases %>%
                                         RDECCFR   = as.character(RDECCFR),
                                         GDECCFR   = as.character(GDECCFR),
                                         PDECCFR   = as.character(PDECCFR),
-                                        ADECCFR   = as.character(ADECCFR),
-                                        IPCF      = as.numeric(as.character(IPCF)))
+                                        ADECCFR   = as.character(ADECCFR)
+                                        )
                          }))
 
 #test <-  bases %>% unnest(cols = c(microdata))
