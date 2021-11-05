@@ -556,10 +556,12 @@ walk2(bases$microdata,bases$filename,
 
 ########################### 2020-t4 en adelante (ojo con el separador de decimales, pasó a ser ","----
 ### individual
+url <- "https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2_Trim_2021_txt.zip"
 temp <- tempfile()
-temp <- tempfile(download.file("https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_4_Trim_2020_txt.zip",temp))
-base <- read.table(unz(temp, "usu_individual_T420.txt"), sep = ";", dec = ",", header = T)
+download.file(url,temp)
+base <- read.table(unz(temp, "usu_individual_T221.txt"), sep = ";", header = T, dec = ",")
 #unlink(temp)
+
 
 base <- base %>% 
   as_tibble() %>% 
@@ -596,13 +598,13 @@ base <- base %>%
          PDECCFR   = as.character(PDECCFR),
          ADECCFR   = as.character(ADECCFR))
 
-saveRDS(base, "eph/individual/base_individual_2020T4.RDS")
+saveRDS(base, "eph/individual/base_individual_2021T2.RDS")
 #table(is.na(base$IPCF))
 
 
 ### Hogar
 
-base <- read.table(unz(temp, "usu_hogar_T420.txt"), sep = ";", dec = ",", header = T)
+base <- read.table(unz(temp, "usu_hogar_T221.txt"), sep = ";", dec = ",", header = T)
 
 base <- base %>% 
   as_tibble() %>% 
@@ -622,6 +624,6 @@ base <- base %>%
          IPCF    = as.numeric(as.character(IPCF)))
 
 
-saveRDS(base, "eph/hogar/base_hogar_2020T4.RDS")
+saveRDS(base, "eph/hogar/base_hogar_2021T2.RDS")
 
 
