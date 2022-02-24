@@ -555,11 +555,23 @@ walk2(bases$microdata,bases$filename,
 
 
 ########################### 2020-t4 en adelante (ojo con el separador de decimales, pasó a ser ","----
-### individual
-url <- "https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2_Trim_2021_txt.zip"
+
+### Defino fecha fecha de la base a subir
+anio <- 2021
+trimestre <- 3 
+
+### Descargo la base en cuestión
+url <- glue::glue("https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_{trimestre}_Trim_{2021}_txt.zip")
 temp <- tempfile()
 download.file(url,temp)
-base <- read.table(unz(temp, "usu_individual_T221.txt"), sep = ";", header = T, dec = ",")
+
+### individual
+### Hasta 2t de 2021 el comprimido eran sólo los archivos
+base <- read.table(unz(temp, glue::glue("usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), sep = ";", header = T, dec = ",")
+
+### En 3t de 2021 el comprimido es una carpeta con los archivos, y con nombres diferentes
+base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}er_Trim_{2021}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt.txt")), 
+                   sep = ";", header = T, dec = ",")
 #unlink(temp)
 
 
@@ -598,15 +610,15 @@ base <- base %>%
          PDECCFR   = as.character(PDECCFR),
          ADECCFR   = as.character(ADECCFR))
 
-saveRDS(base, "eph/individual/base_individual_2021T2.RDS")
+saveRDS(base, glue::glue("eph/individual/base_individual_{anio}T{trimestre}.RDS"))
 #table(is.na(base$IPCF))
 
 
 ### Hogar
 
-base <- read.table(unz(temp, "usu_hogar_T221.txt"), sep = ";", dec = ",", header = T)
+base_hog <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}er_Trim_{anio}_txt/usu_hogar_T{trimestre}{substr(anio,3,4)}.txt.txt")), sep = ";", dec = ",", header = T)
 
-base <- base %>% 
+base_hog <- base_hog %>% 
   as_tibble() %>% 
   rename_all(toupper) %>% 
   mutate(DECIFR = as.character(DECIFR),
@@ -624,6 +636,6 @@ base <- base %>%
          IPCF    = as.numeric(as.character(IPCF)))
 
 
-saveRDS(base, "eph/hogar/base_hogar_2021T2.RDS")
+saveRDS(base_hog, glue::glue("eph/hogar/base_hogar_{anio}T{trimestre}.RDS"))
 
 
