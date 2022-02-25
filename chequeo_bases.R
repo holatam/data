@@ -41,24 +41,20 @@ b_2020_tot_eph <- get_microdata(year = 2020, trimester = 1:4) %>%
 ##                          a través de la base local                       ----
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-b_2020_t1 <- readRDS("eph/individual/base_individual_2020T1.RDS")
-b_2020_t2 <- readRDS("eph/individual/base_individual_2020T2.RDS")
-b_2020_t3 <- readRDS("eph/individual/base_individual_2020T3.RDS")
-b_2020_t4 <- readRDS("eph/individual/base_individual_2020T4.RDS")
+b_2021_t1 <- readRDS("eph/individual/base_individual_2021T1.RDS")
+b_2021_t2 <- readRDS("eph/individual/base_individual_2021T2.RDS")
+b_2021_t3 <- readRDS("eph/individual/base_individual_2021T3.RDS")
+#b_2020_t4 <- readRDS("eph/individual/base_individual_2020T4.RDS")
 
 
-b_2020_tot <- dplyr::bind_rows(
-  b_2020_t1, 
-  b_2020_t2, 
-  b_2020_t3, 
-  b_2020_t4,
+b_2021_tot <- dplyr::bind_rows(
+  b_2021_t1, 
+  b_2021_t2, 
+  b_2021_t3, 
+  #b_2020_t4,
   )
 
-
-class(b_2020_t3$PP04B_COD)
-class(b_2020_t4$PP04B_COD)
-
-
+class(b_2021_t3$IPCF)
 
 
 

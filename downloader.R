@@ -567,7 +567,7 @@ download.file(url,temp)
 
 ### individual
 ### Hasta 2t de 2021 el comprimido eran sólo los archivos
-base <- read.table(unz(temp, glue::glue("usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), sep = ";", header = T, dec = ",")
+#base <- read.table(unz(temp, glue::glue("usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), sep = ";", header = T, dec = ",")
 
 ### En 3t de 2021 el comprimido es una carpeta con los archivos, y con nombres diferentes
 base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}er_Trim_{2021}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt.txt")), 
@@ -608,7 +608,8 @@ base <- base %>%
          RDECCFR   = as.character(RDECCFR),
          GDECCFR   = as.character(GDECCFR),
          PDECCFR   = as.character(PDECCFR),
-         ADECCFR   = as.character(ADECCFR))
+         ADECCFR   = as.character(ADECCFR),
+         IPCF      = as.numeric(IPCF))
 
 saveRDS(base, glue::glue("eph/individual/base_individual_{anio}T{trimestre}.RDS"))
 #table(is.na(base$IPCF))
