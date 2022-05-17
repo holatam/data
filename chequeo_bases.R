@@ -70,30 +70,6 @@ library(tidyverse)
 library(eph)
 
 
-##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-##                    A través de la función get_microdata                  ----
-##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#..........................una por una...........................
-b_2016_t4 <- get_microdata(2016, 4)
-b_2017_t4 <- get_microdata(2017, 4)
-b_2018_t4 <- get_microdata(2018, 4)
-b_2019_t4 <- get_microdata(2019, 4)
-b_2020_t4 <- get_microdata(2020, 4)
-b_2021_t4 <- get_microdata(2021, 4)
-
-## Apilo en una sola
-b_interanual_dplyr <- dplyr::bind_rows(b_2016_t4, b_2017_t4, b_2018_t4, b_2019_t4, b_2020_t4, b_2021_t4)
-
-
-#................Pruebo la serie entera para 2020................
-b_interanual_tot_eph <- get_microdata(year = 2016:2021, trimester = 4) %>% 
-  select(microdata) %>% 
-  unnest(microdata)
-
-
-
-
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##                          a través de la base local                       ----
@@ -118,5 +94,35 @@ b_interanual_tot <- dplyr::bind_rows(
 
 
 class(b_2020_t4$PP04B_COD)
+
+
+
+
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##                    A través de la función get_microdata                  ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#..........................una por una...........................
+b_2016_t4 <- get_microdata(2016, 4)
+b_2017_t4 <- get_microdata(2017, 4)
+b_2018_t4 <- get_microdata(2018, 4)
+b_2019_t4 <- get_microdata(2019, 4)
+b_2020_t4 <- get_microdata(2020, 4)
+b_2021_t4 <- get_microdata(2021, 4)
+
+## Apilo en una sola
+b_interanual_dplyr <- dplyr::bind_rows(b_2016_t4, 
+                                       b_2017_t4, 
+                                       b_2018_t4, 
+                                       b_2019_t4, 
+                                       b_2020_t4, 
+                                       b_2021_t4)
+
+
+#................Pruebo la serie entera para 2020................
+b_interanual_tot_eph <- get_microdata(year = 2016:2021, trimester = 4) %>% 
+  select(microdata) %>% 
+  unnest(microdata)
 
 
