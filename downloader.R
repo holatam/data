@@ -558,7 +558,7 @@ walk2(bases$microdata,bases$filename,
 
 ### Defino fecha fecha de la base a subir
 anio <- 2021
-trimestre <- 3 
+trimestre <- 4
 
 ### Descargo la base en cuestión
 url <- glue::glue("https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_{trimestre}_Trim_{2021}_txt.zip")
@@ -566,14 +566,23 @@ temp <- tempfile()
 download.file(url,temp)
 
 ### individual
+
+#  OJO que no es sistemática la forma de publicación. A veces es un archivo     
+#  zipeado con una subcarpeta, otras los archivos zippeados sin la              
+#  subcarpeta. También hay archivos con dobre .txt en el nombre                 
+
+
 ### Hasta 2t de 2021 el comprimido eran sólo los archivos
 #base <- read.table(unz(temp, glue::glue("usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), sep = ";", header = T, dec = ",")
 
 ### En 3t de 2021 el comprimido es una carpeta con los archivos, y con nombres diferentes
-base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}er_Trim_{2021}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt.txt")), 
+# base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}er_Trim_{anio}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), 
+#                    sep = ";", header = T, dec = ",")
+
+### En 4t de 2021 el comprimido es una carpeta con los archivos
+base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}to_Trim_{anio}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), 
                    sep = ";", header = T, dec = ",")
 #unlink(temp)
-
 
 base <- base %>% 
   as_tibble() %>% 
@@ -616,8 +625,9 @@ saveRDS(base, glue::glue("eph/individual/base_individual_{anio}T{trimestre}.RDS"
 
 
 ### Hogar
+base_hog <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}to_Trim_{anio}_txt/usu_hogar_T{trimestre}{substr(anio,3,4)}.txt")), sep = ";", dec = ",", header = T)
+  
 
-base_hog <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}er_Trim_{anio}_txt/usu_hogar_T{trimestre}{substr(anio,3,4)}.txt.txt")), sep = ";", dec = ",", header = T)
 
 base_hog <- base_hog %>% 
   as_tibble() %>% 
