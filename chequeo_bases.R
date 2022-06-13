@@ -126,3 +126,29 @@ b_interanual_tot_eph <- get_microdata(year = 2016:2021, trimester = 4) %>%
   unnest(microdata)
 
 
+# fix base_individual_2000O1 base_individual_2000O2 -----------------------
+fix_encoding <- function(df, originalEncoding = "latin1") {
+  numCols <- ncol(df)
+  df <- data.frame(df)
+  for (col in 1:numCols)
+  {
+    if(class(df[, col]) == "character"){
+      Encoding(df[, col]) <- originalEncoding
+    }
+    
+    if(class(df[, col]) == "factor"){
+      Encoding(levels(df[, col])) <- originalEncoding
+    }
+  }
+  return(as_tibble(df))
+}
+test_miscoding <- function(df){levels(df$P57)[str_detect(levels(df$P57),'AGRIMENSOR')]}
+
+base_individual_2000O1 <-  readRDS('eph/individual/base_individual_2000O1.RDS')
+
+base_individual_2000O1b <- fix_encoding(base_individual_2000O1,originalEncoding = 'CP1252')
+
+x <-  stringi::stri_enc_toascii(levels(base_individual_2000O1$P57))
+x[str_detect(x,'AGRIMENSOR')]
+
+test_miscoding(base_individual_2000O1b)
