@@ -580,8 +580,17 @@ download.file(url,temp)
 #                    sep = ";", header = T, dec = ",")
 
 ### En 4t de 2021 el comprimido es una carpeta con los archivos
-base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}to_Trim_{anio}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), 
+
+
+# base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}to_Trim_{anio}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), 
+#                    sep = ";", header = T, dec = ",")
+
+#saco el "to", lo sacaron
+
+base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}_Trim_{anio}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), 
                    sep = ";", header = T, dec = ",")
+
+
 #unlink(temp)
 
 base <- base %>% 
@@ -619,6 +628,7 @@ base <- base %>%
          PDECCFR   = as.character(PDECCFR),
          ADECCFR   = as.character(ADECCFR),
          IPCF      = as.numeric(IPCF))
+
 
 saveRDS(base, glue::glue("eph/individual/base_individual_{anio}T{trimestre}.RDS"))
 #table(is.na(base$IPCF))
