@@ -556,39 +556,38 @@ walk2(bases$microdata,bases$filename,
 
 ########################### 2020-t4 en adelante (ojo con el separador de decimales, pasó a ser ","----
 
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##  ~ Tabla de bases descargadas  ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+base <- data.frame(anio = as.numeric(substring(list.files("eph/individual/"), 17, 20)),
+                   trim = as.numeric(substring(list.files("eph/individual/"), 22, 22)))
+
+
+anio <- max(as.numeric(substring(list.files("eph/individual/"), 17, 20)))
+
+list.files("eph/individual/")
+
 ### Defino fecha fecha de la base a subir
 anio <- 2021
 trimestre <- 4
 
 ### Descargo la base en cuestión
-url <- glue::glue("https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_{trimestre}_Trim_{2021}_txt.zip")
+url <- glue::glue("https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_{trimestre}_Trim_{anio}_txt.zip")
 temp <- tempfile()
 download.file(url,temp)
 
-### individual
 
-#  OJO que no es sistemática la forma de publicación. A veces es un archivo     
-#  zipeado con una subcarpeta, otras los archivos zippeados sin la              
-#  subcarpeta. También hay archivos con dobre .txt en el nombre                 
+lista_zip <- unzip(temp, list = TRUE)
 
+base <- read.table(
+  unz(
+    temp,
+    lista_zip$Name[grepl('individual', lista_zip$Name)]
+  ),
+  sep = ";", header = T, dec = ",")
 
-### Hasta 2t de 2021 el comprimido eran sólo los archivos
-#base <- read.table(unz(temp, glue::glue("usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), sep = ";", header = T, dec = ",")
-
-### En 3t de 2021 el comprimido es una carpeta con los archivos, y con nombres diferentes
-# base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}er_Trim_{anio}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), 
-#                    sep = ";", header = T, dec = ",")
-
-### En 4t de 2021 el comprimido es una carpeta con los archivos
-
-
-# base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}to_Trim_{anio}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), 
-#                    sep = ";", header = T, dec = ",")
-
-#saco el "to", lo sacaron
-
-base <- read.table(unz(temp, glue::glue("EPH_usu_{trimestre}_Trim_{anio}_txt/usu_individual_T{trimestre}{substr(anio,3,4)}.txt")), 
-                   sep = ";", header = T, dec = ",")
 
 
 #unlink(temp)

@@ -17,15 +17,18 @@ library(eph)
 
 #..........................una por una...........................
 b_2020_t1 <- get_microdata(2020, 1)
-b_2020_t2 <- get_microdata(2020, 2)
-b_2020_t3 <- get_microdata(2020, 3)
-b_2020_t4 <- get_microdata(2020, 4)
+b_2021_t1 <- get_microdata(2021, 1)
+b_2022_t1 <- get_microdata(2022, 1)
+
 
 ## Apilo en una sola
-b_2020_tot_dplyr <- dplyr::bind_rows(b_2020_t1, b_2020_t2, b_2020_t3, b_2020_t4)
+b_tot <- dplyr::bind_rows(b_2020_t1,
+                                     b_2021_t1,
+                                     b_2022_t1)
 
-class(b_2020_t3$PP04B_COD)
-class(b_2020_t4$PP04B_COD)
+class(b_2020_t1$PP04B_COD)
+class(b_2021_t1$PP04B_COD)
+class(b_2022_t1$PP04B_COD)
 
 
 #................Pruebo la serie entera para 2020................
@@ -41,17 +44,21 @@ b_2020_tot_eph <- get_microdata(year = 2020, trimester = 1:4) %>%
 ##                          a través de la base local                       ----
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+b_2017_t1 <- readRDS("eph/individual/base_individual_2017T1.RDS")
+b_2018_t1 <- readRDS("eph/individual/base_individual_2018T1.RDS")
+b_2019_t1 <- readRDS("eph/individual/base_individual_2019T1.RDS")
+b_2020_t1 <- readRDS("eph/individual/base_individual_2020T1.RDS")
 b_2021_t1 <- readRDS("eph/individual/base_individual_2021T1.RDS")
-b_2021_t2 <- readRDS("eph/individual/base_individual_2021T2.RDS")
-b_2021_t3 <- readRDS("eph/individual/base_individual_2021T3.RDS")
-b_2020_t4 <- readRDS("eph/individual/base_individual_2020T4.RDS")
+b_2022_t1 <- readRDS("eph/individual/base_individual_2022T1.RDS")
 
 
-b_2021_tot <- dplyr::bind_rows(
-  b_2021_t1, 
-  b_2021_t2, 
-  b_2021_t3, 
-  b_2020_t4,
+b_tot <- dplyr::bind_rows(
+  b_2017_t1,
+  b_2018_t1,
+  b_2019_t1,
+  b_2020_t1,
+  b_2021_t1,
+  b_2022_t1
   )
 
 
