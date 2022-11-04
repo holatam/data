@@ -3,7 +3,7 @@ name: descarga_indec
 on: 
   push:
   schedule:
-   - cron: '0 17 * * * '
+   - cron: '0 20 * * * '
 
 jobs:
   render:
